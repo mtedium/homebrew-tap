@@ -7,7 +7,6 @@
 | Cask | 软件 | 官网 |
 | --- | --- | --- |
 | `irightmouse-pro` | 超级右键专业版 | [iRightMouse Pro](https://www.aodo365.com/irightmousepro.html) |
-
 | `trae` | TRAE 国际版（Apple Silicon） | [TRAE](https://www.trae.ai/) |
 
 ## 安装与升级
@@ -22,17 +21,7 @@ brew install --cask mtedium/tap/trae
 
 ```sh
 brew update
-brew upgrade --cask mtedium/tap/irightmouse-pro
+brew upgrade --cask mtedium/tap/irightmouse-pro mtedium/tap/trae
 ```
 
-## 自动更新
-
-推送到 `main` 后、每天北京时间早上 6 点检查官网，也可在 Actions 中手动运行。有变更时自动创建或更新 PR，合并后即可通过上述命令升级。
-
-## 首次发布
-
-将仓库上传至 `mtedium/homebrew-tap`，确保工作流位于默认分支。
-在仓库 Settings → Actions → General → Workflow permissions 中勾选 **Allow GitHub Actions to create and approve pull requests**，无需配置个人 Token。
-首次可在 Actions 中选择“更新 Cask”，点击 Run workflow 验证。
-
-维护规则与验证方式见 [AGENTS.md](AGENTS.md)。
+软件版本由仓库自动检查，更新发布后可通过上述命令升级。
