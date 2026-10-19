@@ -8,11 +8,14 @@
 | --- | --- | --- |
 | `irightmouse-pro` | 超级右键专业版 | [iRightMouse Pro](https://www.aodo365.com/irightmousepro.html) |
 
+| `trae` | TRAE 国际版（Apple Silicon） | [TRAE](https://www.trae.ai/) |
+
 ## 安装与升级
 
 ```sh
 brew tap mtedium/tap
 brew install --cask mtedium/tap/irightmouse-pro
+brew install --cask mtedium/tap/trae
 ```
 
 升级已安装的软件：
@@ -24,7 +27,7 @@ brew upgrade --cask mtedium/tap/irightmouse-pro
 
 ## 自动更新
 
-每天北京时间早上 6 点检查官网，有变更时自动创建或更新 PR。合并后即可通过上述命令升级。
+推送到 `main` 后、每天北京时间早上 6 点检查官网，也可在 Actions 中手动运行。有变更时自动创建或更新 PR，合并后即可通过上述命令升级。
 
 ## 首次发布
 

@@ -7,7 +7,7 @@
 - `README.md` 面向使用者：软件目录、安装和升级命令、自动更新行为概述、首次发布设置。
 - 本文件面向维护代理：修改约束、维护入口和验证要求。
 - 软件版本、下载地址、SHA256 以 `Casks/*.rb` 为准；README 的软件目录只列名称和官网，避免重复维护版本。
-- 定时任务与权限以 `.github/workflows/update-casks.yml` 为准；解析与核验逻辑以 `scripts/update_irightmouse.py` 为准。
+- 定时任务与权限以 `.github/workflows/update-casks.yml` 为准；各软件的来源解析见 `scripts/update_*.py`；共同的下载与 DMG 核验见 `scripts/update_cask.py`。
 
 ## 维护更新
 
@@ -17,6 +17,7 @@
 - 下载后计算 SHA256；写入 Cask 前，只读挂载 DMG，核实应用标识、版本和构建号与官网文件信息一致。安装规则中的应用名须与 DMG 实际内容一致。
 - 官网结构、下载域名或文件信息变化时，保留原有 Cask 并明确报错，人工确认后再调整解析规则。
 - 自动更新仅在 Cask 有变化时创建或更新 PR；无变化不创建 PR。保留合并后供用户升级的发布流程。
+- TRAE 使用官方版本 API 的 `darwin.versions`，选取 `va` 区域的 `apple` 发布，原样使用其 URL。应用版本以 API 的 `version` 为准，下载路径中的版本号属于另一编号。当前仅收录 Apple Silicon；核验 `Trae.app` 的应用标识和版本。
 - 添加其他软件时，根据其官网实现解析和核验，并为可能变化的下载信息添加测试。
 
 ## 验证
