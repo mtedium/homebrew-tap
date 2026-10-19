@@ -1,6 +1,6 @@
 # mtedium Homebrew Tap
 
-自定义 macOS 应用安装规则，安装包直接从软件官网获取。
+自定义 macOS 应用安装规则，安装包直接从软件官网获取。收录homebrew官方没有或过期的应用。
 
 ## 已收录
 
