@@ -1,4 +1,4 @@
-name: 更新 Cask
+name: 检查更新
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
     paths:
       - 'Casks/*.rb'
       - 'scripts/*.py'
-      - '.github/workflows/update-casks.yml'
+      - '.github/workflows/check-updates.yml'
   schedule:
     - cron: '0 22 * * *'
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        software: [irightmouse, trae]
+        software: [irightmouse, trae, removemacai]
     steps:
       - uses: actions/checkout@v6
       - name: 测试官网下载解析
@@ -43,5 +43,5 @@ jobs:
           title: '更新 ${{ matrix.software }}'
           body: |
             从软件官方来源重新取得完整下载地址。
-            已核实 DMG 中的应用标识、版本（超级右键同时核验构建号），并重新计算 SHA256。
+            已核实安装包中的应用标识、版本（超级右键同时核验构建号），并重新计算 SHA256。
             合并后，用户可通过 brew upgrade --cask 升级。
