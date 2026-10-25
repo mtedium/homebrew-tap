@@ -32,6 +32,8 @@ jobs:
       - name: 测试官网下载解析
         run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - name: 获取官网安装包并核验更新
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/update_${{ matrix.software }}.py
       - name: 创建或更新 PR
         uses: peter-evans/create-pull-request@v8
