@@ -1,5 +1,6 @@
 """Update the GUI app from official stable GitHub releases."""
 import json
+import os
 import re
 from pathlib import Path
 from update_cask import fetch, update_cask
@@ -20,7 +21,7 @@ def resolve_download(response):
 
 
 def main():
-    version, url = resolve_download(json.loads(fetch(API)))
+    version, url = resolve_download(json.loads(fetch(API, token=os.environ.get('GITHUB_TOKEN'))))
     update_cask(Path(__file__).resolve().parents[1] / 'Casks/removemacai.rb',
                 version, url, 'RemoveMacAI.app', 'io.github.omlahore.removemacai.app',
                 build=version, archive='zip')

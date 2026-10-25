@@ -8,11 +8,15 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 
-def fetch(url, data=None):
+def fetch(url, data=None, token=None):
     args = ['curl', '--fail', '--location', '--compressed', '--silent',
             '--show-error', '--retry', '3', '--max-time', '180', url]
     if data is not None:
         args += ['--data', urlencode(data)]
+    if token:
+        # stdin 避免凭据出现在进程参数和异常堆栈中。
+        args += ['--header', '@-']
+        return subprocess.check_output(args, input=f'Authorization: Bearer {token}\n'.encode())
     return subprocess.check_output(args)
 
 
