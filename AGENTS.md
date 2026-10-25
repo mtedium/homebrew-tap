@@ -7,7 +7,7 @@
 - `README.md` 面向使用者：软件目录、安装和升级命令、自动更新行为概述。
 - 本文件面向维护代理：修改约束、维护操作和验证要求。
 - 软件版本、下载地址、SHA256 以 `Casks/*.rb` 为准；README 的软件目录只列名称和官网，避免重复维护版本。
-- 定时任务与权限以 `.github/workflows/update-casks.yml` 为准；各软件的来源解析见 `scripts/update_*.py`；共同的下载与 DMG 核验见 `scripts/update_cask.py`。
+- 定时任务与权限以 `.github/workflows/check-updates.yml` 为准；各软件的来源解析见 `scripts/update_*.py`；共同的下载与 DMG 核验见 `scripts/update_cask.py`。
 
 ## 实现约束
 
