@@ -1,8 +1,8 @@
 cask "trae" do
-  version "3.6.4"
-  sha256 "0bf501b0ce59332f694c98ca0e0061c270672e5767241da7a6c529db3b5a8163"
+  version "3.6.13"
+  sha256 "2644135f0e783c6a2f5860b8e8fdae9c0a72cbb1fe935d1e4bf022812ca04452"
 
-  url "https://lf-cdn.trae.ai/obj/trae-ai-us/pkg/app/releases/stable/2.3.93439/darwin/TRAE-darwin-arm64.dmg"
+  url "https://lf-cdn.trae.ai/obj/trae-ai-us/pkg/app/releases/stable/2.3.99397/darwin/TRAE-darwin-arm64.dmg"
   name "TRAE"
   desc "AI-powered code editor"
   homepage "https://www.trae.ai/"
