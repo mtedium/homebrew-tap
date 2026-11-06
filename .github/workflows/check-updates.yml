@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
     paths:
-      - 'Casks/*.rb'
       - 'scripts/*.py'
       - '.github/workflows/check-updates.yml'
   schedule:
@@ -36,6 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 scripts/update_${{ matrix.software }}.py
       - name: 创建或更新 PR
+        id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
           branch: auto-update/${{ matrix.software }}
@@ -47,3 +47,11 @@ jobs:
             从软件官方来源重新取得完整下载地址。
             已核实安装包中的应用标识、版本（超级右键同时核验构建号），并重新计算 SHA256。
             合并后，用户可通过 brew upgrade --cask 升级。
+      - name: 合并更新 PR
+        if: steps.cpr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
+          PR_HEAD_SHA: ${{ steps.cpr.outputs.pull-request-head-sha }}
+        run: gh pr merge "$PR_NUMBER" --squash --match-head-commit "$PR_HEAD_SHA"

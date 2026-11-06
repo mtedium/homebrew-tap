@@ -26,6 +26,6 @@ brew update
 brew upgrade --cask mtedium/tap/irightmouse-pro mtedium/tap/trae mtedium/tap/removemacai
 ```
 
-软件版本由仓库自动检查，更新发布后可通过上述命令升级。
+软件版本由仓库定时自动检查，通过测试和安装包核验后创建 PR 并直接合并。合并后的 Cask 变更不会再次触发更新检查，用户可通过上述命令升级。
 
 RemoveMacAI 尚未经过 Apple 公证，首次打开可能需要在“系统设置 → 隐私与安全性”中允许。卸载应用前，请先在应用中使用 Undo Everything 恢复其修改的设置。
