@@ -1,8 +1,8 @@
 cask "irightmouse-pro" do
   version "2.5.1"
-  sha256 "11932159dbf07b80244d50a597cba6b7437f4ba6240b385d6f76dc8fe5f9dfd0"
+  sha256 "f4b88ee88b7d43e0d3affbbc35b7a6feefab97f8647bb7fadfa970e086a77308"
 
-  url "https://download.s21i.co99.net/33780428/0/0/ABUIABBtGAAgxvLj1QYo0rWu6gc.dmg?f=iRightMousePro2.5.1_2026092701.dmg&v=1790507340"
+  url "https://download.s21i.co99.net/33780428/0/0/ABUIABBtGAAgyujF1wYo_aH9Cw.dmg?f=iRightMousePro_2.5.1_2026110701.dmg&v=1794208847"
   name "iRightMouse Pro"
   name "超级右键专业版"
   desc "Finder context menu tools"
