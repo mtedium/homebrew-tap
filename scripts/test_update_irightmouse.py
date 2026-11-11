@@ -23,6 +23,9 @@ class DownloadParsingTest(unittest.TestCase):
             'allowDownload': True, 'downloadUrl': url}}
         self.assertEqual(resolve_download(response),
                          ('2.6.0', 'https:' + url, '2026101901'))
+        response['file']['name'] = 'iRightMousePro_2.5.1_2026110701.dmg'
+        self.assertEqual(resolve_download(response),
+                         ('2.5.1', 'https:' + url, '2026110701'))
         for key, value in [('name', 'OtherApp.dmg'), ('allowDownload', False),
                            ('downloadUrl', 'https://other.example/app.dmg')]:
             with self.subTest(key=key), self.assertRaises(ValueError):

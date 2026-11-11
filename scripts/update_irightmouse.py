@@ -37,7 +37,7 @@ def resolve_download(response):
     if not response.get('success'):
         raise ValueError('官网下载接口返回失败')
     info = response['file']
-    match = re.fullmatch(r'iRightMousePro(\d+(?:\.\d+)+)_(\d+)\.dmg', info['name'])
+    match = re.fullmatch(r'iRightMousePro_?(\d+(?:\.\d+)+)_(\d+)\.dmg', info['name'])
     if not match or not info.get('allowDownload'):
         raise ValueError('下载文件名不符合预期，或不允许下载')
     url = info['downloadUrl']
