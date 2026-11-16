@@ -8,7 +8,7 @@ cask "removemacai" do
   homepage "https://github.com/omlahore/RemoveMacAI"
 
   depends_on arch: :arm64
-  depends_on macos: ">= :tahoe"
+  depends_on macos: :tahoe
 
   app "RemoveMacAI.app"
 end
