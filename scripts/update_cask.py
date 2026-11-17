@@ -8,9 +8,15 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 
-def fetch(url, data=None, token=None):
+def fetch(url, data=None, token=None, *, output=None):
     args = ['curl', '--fail', '--location', '--compressed', '--silent',
-            '--show-error', '--retry', '3', '--max-time', '180', url]
+            '--show-error', '--retry', '3']
+    if output is not None:
+        # curl 重试时能截断输出文件，stdout 则会保留上次的残片。
+        subprocess.run(args + ['--max-time', '300', '--retry-max-time', '480',
+                               '--output', str(output), url], check=True)
+        return
+    args += ['--max-time', '180', url]
     if data is not None:
         args += ['--data', urlencode(data)]
     if token:
@@ -24,8 +30,12 @@ def update_cask(cask, version, url, app, bundle_id, build=None, archive="dmg"):
     with tempfile.TemporaryDirectory() as folder:
         folder = Path(folder)
         package = folder / ('download.' + archive)
-        package.write_bytes(fetch(url))
-        digest = hashlib.sha256(package.read_bytes()).hexdigest()
+        fetch(url, output=package)
+        checksum = hashlib.sha256()
+        with package.open('rb') as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+                checksum.update(chunk)
+        digest = checksum.hexdigest()
         current = cask.read_text()
         updated = current
         for key, value in [('version', version), ('sha256', digest), ('url', url)]:
