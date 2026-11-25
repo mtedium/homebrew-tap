@@ -1,8 +1,47 @@
 import unittest
-from update_irightmouse import parse_page, resolve_download
+from unittest.mock import patch
+from update_irightmouse import FEED, main, parse_feed, parse_page, resolve_download
+
+
+FEED_XML = b"""<rss xmlns:s="http://www.andymatuschak.org/xml-namespaces/sparkle">
+<channel><item><s:version>2026110701</s:version>
+<s:shortVersionString>2.5.1</s:shortVersionString>
+<link>https://www.aodo365.com/irightmousepro.html</link></item></channel></rss>"""
+CASK_URL = ('https://download.s21i.co99.net/file.dmg'
+            '?f=iRightMousePro_2.5.1_2026110701.dmg')
 
 
 class DownloadParsingTest(unittest.TestCase):
+    def test_feed_without_download_link(self):
+        self.assertEqual(parse_feed(FEED_XML), ('2.5.1', '2026110701'))
+
+    def test_invalid_feed(self):
+        for data in (b'<rss', b'<rss><channel/></rss>',
+                     FEED_XML.replace(b'2026110701', b'unknown')):
+            with self.subTest(data=data), self.assertRaises(ValueError):
+                parse_feed(data)
+
+    def test_current_build_checks_only_feed(self):
+        with patch('update_irightmouse.CASK', **{'read_text.return_value': f'  url "{CASK_URL}"\n'}), \
+             patch('update_irightmouse.fetch', return_value=FEED_XML) as fetch, \
+             patch('update_irightmouse.subprocess.check_output') as curl, \
+             patch('update_irightmouse.update_cask') as update:
+            main()
+        fetch.assert_called_once_with(FEED)
+        curl.assert_not_called()
+        update.assert_not_called()
+
+    def test_website_build_must_match_feed(self):
+        page = b'<a id="module3607FlBtn" href="https://a.u9c.cn/Example123">Download</a>'
+        with patch('update_irightmouse.CASK', **{'read_text.return_value': f'  url "{CASK_URL}"\n'}), \
+             patch('update_irightmouse.fetch', side_effect=[FEED_XML.replace(
+                b'2026110701', b'2026110702'), page]), \
+             patch('update_irightmouse.subprocess.check_output', return_value=CASK_URL), \
+             patch('update_irightmouse.update_cask') as update:
+            with self.assertRaisesRegex(ValueError, '与官方更新源不一致'):
+                main()
+        update.assert_not_called()
+
     def test_download_element(self):
         page = """<a href='/other'>下载专业版</a>
         <a HREF='https://a.u9c.cn/Example123'
